@@ -1,36 +1,36 @@
 const asyncHandler = require('express-async-handler')
-const Goal = require('../model/goalModel')
+const Todo = require('../model/todoModel')
 const User = require('../model/userModel')
 
 //get goals
-const getGoals = asyncHandler(async (req, res) => {
-    const goals = await Goal.find({ user: req.user.id })
+const getTodos = asyncHandler(async (req, res) => {
+    const todos = await Goal.find({ user: req.user.id })
   
-    res.status(200).json(goals)
+    res.status(200).json(todos)
   })
 
 //set goal
-const setGoals = asyncHandler(async (req, res) => {
+const setTodos = asyncHandler(async (req, res) => {
 
     if (!req.body.text) {
       res.status(400)
       throw new Error('add a text field')
     }
   
-    const goal = await Goal.create({
+    const todo = await Todo.create({
       text: req.body.text,
       user: req.user.id,
       
     })
   
-    res.status(200).json(goal)
+    res.status(200).json(todo)
   })
 
 //update goals 
-const updateGoals = asyncHandler(async(req, res) => {
-    const goal = await Goal.findById(req.params.id)
+const updateTodos = asyncHandler(async(req, res) => {
+    const todo = await Todo.findById(req.params.id)
 
-    if (!goal) {
+    if (!todo) {
         res.status(400)
         throw new Error('Goal not found')
       }
@@ -44,13 +44,13 @@ const updateGoals = asyncHandler(async(req, res) => {
       }
 
       //only logged in users can update their own goals
-      if (goal.user.toString() !== req.user.id) {
+      if (todo.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
       }
 
 
-      const updatedGoal = await Goal.findByIdAndUpdate(req.params.id, req.body, {
+      const updatedGoal = await Todo.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
       })
 
@@ -58,10 +58,10 @@ const updateGoals = asyncHandler(async(req, res) => {
 })
 
 //delete goals 
-const deleteGoals = asyncHandler(async(req, res) => {
-    const goal = await Goal.findById(req.params.id)
+const deleteTodos = asyncHandler(async(req, res) => {
+    const todo = await Todo.findById(req.params.id)
 
-    if (!goal) {
+    if (!todo) {
       res.status(400)
       throw new Error('Goal not found')
     }
@@ -74,12 +74,12 @@ const deleteGoals = asyncHandler(async(req, res) => {
       }
 
       //only logged in users can update their own goals
-      if (goal.user.toString() !== req.user.id) {
+      if (todo.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error('User not authorized')
       }
 
-  await goal.remove()
+  await todo.remove()
 
   res.status(200).json({ id: req.params.id })
 
@@ -89,5 +89,5 @@ const deleteGoals = asyncHandler(async(req, res) => {
 
 
 module.exports = {
-    getGoals, setGoals, updateGoals, deleteGoals
+    getTodos, setTodos, updateTodos, deleteTodos
 }

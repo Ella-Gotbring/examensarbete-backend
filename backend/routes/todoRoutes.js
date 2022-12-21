@@ -1,25 +1,25 @@
 const express = require('express')
 const router = express.Router()
 const { protect } = require('../middleware/authMiddleware')
-const { getGoals, setGoals, updateGoals, deleteGoals} = require('../controllers/goalController')
+const { getTodos, setTodos, updateTodos, deleteTodos } = require('../controllers/todoController')
 
 //routes
 
 //GET goal 
 //api/goals 
-router.get('/', protect, getGoals)
+router.get('/', protect, getTodos)
 
 //POST goal 
 //api/goals 
-router.post('/', protect, setGoals)
+router.post('/', protect, setTodos)
 
 //PUT update goal 
 //api/goals/id
-router.put('/:id', protect, updateGoals)
+router.put('/:id', protect, updateTodos)
 
 //DELETE goal 
 //api/goals/id 
-router.delete('/:id', protect, deleteGoals)
+router.delete('/:id', protect, deleteTodos)
 
 
 
