@@ -7,6 +7,8 @@
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "client": "npm start --prefix frontend"
+   
+
   },
   "repository": {
     "type": "git",
@@ -29,6 +31,7 @@
     "mongoose": "^6.8.1"
   },
   "devDependencies": {
+    "concurrently": "^7.6.0",
     "nodemon": "^2.0.20"
   }
 }
